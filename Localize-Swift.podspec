@@ -1,42 +1,38 @@
-#
-# Be sure to run `pod lib lint Zip.podspec' to ensure this is a
-# valid spec before submitting.
-#
-# Any lines starting with a # are optional, but their use is encouraged
-# To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html
-#
-
 Pod::Spec.new do |s|
   s.name             = "Localize-Swift"
-  s.version          = "2.0.0"
+  s.version          = "3.2.0"
   s.summary          = "Swift-friendly localization and i18n syntax with in-app language switching."
-
-# This description is used to generate tags and improve search results.
-#   * Think: What does it do? Why did you write it? What is the focus?
-#   * Try to keep it short, snappy and to the point.
-#   * Write the description between the DESC delimiters below.
-#   * Finally, don't worry about the indent, CocoaPods strips it!
   s.description      = <<-DESC
                       A simple framework that improves localization and i18n in Swift apps with cleaner syntax and in-app language switching.
                      DESC
 
   s.homepage         = "https://github.com/marmelroy/Localize-Swift"
-  # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
   s.license          = 'MIT'
   s.author           = { "Roy Marmelstein" => "marmelroy@gmail.com" }
   s.source           = { :git => "https://github.com/marmelroy/Localize-Swift.git", :tag => s.version.to_s, :submodules => true}
   s.social_media_url   = "http://twitter.com/marmelroy"
 
-  s.ios.deployment_target = '8.0'
-  s.osx.deployment_target = '10.9'
-  s.tvos.deployment_target = '9.0'
-  s.watchos.deployment_target = '2.0'
-
-  s.pod_target_xcconfig = { 'SWIFT_VERSION' => '4.2' }
-
+  s.swift_version = '5.3'
+  s.pod_target_xcconfig = { 'SWIFT_VERSION' => '5.3' }
   s.requires_arc = true
 
-  s.source_files = 'Sources'
+  s.ios.deployment_target = '9.0'
+  s.osx.deployment_target = '10.10'
+  s.tvos.deployment_target = '9.0'
+  s.watchos.deployment_target = '4.0'
 
-  # s.dependency 'AFNetworking', '~> 2.3'
+  s.subspec 'LocalizeSwiftCore' do |core|
+    core.ios.deployment_target = '9.0'
+    core.osx.deployment_target = '10.10'
+    core.tvos.deployment_target = '9.0'
+    core.watchos.deployment_target = '4.0'
+    core.source_files = "Sources/"
+  end
+
+  s.subspec 'UIKit' do |ui|
+    ui.dependency 'Localize-Swift/LocalizeSwiftCore'
+    ui.ios.deployment_target = '9.0'
+    ui.source_files = 'Sources/UI/'
+  end
+
 end
